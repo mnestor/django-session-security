@@ -25,11 +25,15 @@ It provides sensible defaults so you could start with just::
 
     {# Bootstrap a SessionSecurity instance as the sessionSecurity global variable #}
     <script type="text/javascript">
-        var sessionSecurity = new yourlabs.SessionSecurity({
-            pingUrl: '{% url 'session_security_ping' %}',
-            warnAfter: {{ request|warn_after }},
-            expireAfter: {{ request|expire_after }},
-            confirmFormDiscard: "{% trans 'You have unsaved changes in a form of this page.' %}"
-        });
+        document.onreadystatechange = function () {
+            if (document.readyState == "complete") {
+                var sessionSecurity = new yourlabs.SessionSecurity({
+                    pingUrl: '{% url 'session_security_ping' %}',
+                    warnAfter: {{ request|warn_after }},
+                    expireAfter: {{ request|expire_after }},
+                    confirmFormDiscard: "{% trans 'You have unsaved changes in a form of this page.' %}"
+                });
+            }
+        }
     </script>
 {% endif %}
